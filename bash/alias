@@ -1,0 +1,13 @@
+#!/bin/bash
+alias chrome="C:/'Program Files (x86)'/google/chrome/application/chrome.exe"
+alias vs="'C:/Applications/Visual Studio/Common7/IDE/devenv.exe'"
+alias ll='ls -l --color'
+alias la='ls -a --color'
+alias lla='ls -la --color'
+alias grep='grep --color'
+alias ls='ls --color'
+alias dir='ls --color=auto --format=vertical'
+alias vdir='ls --color=auto --format=long'
+alias desktop='cd /cygdrive/c/users/admin/desktop'
+#alias clear='clear && source ~/.bashrc && echo resourced'
+

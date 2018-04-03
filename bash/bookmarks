@@ -1,0 +1,12 @@
+#!/bin/bash
+
+function bm {  
+ case $1 in
+ 	'moodle' )
+	chrome moodle.ruppin.ac.il;;
+	'ruppinet' )
+	chrome ruppinet.ruppin.ac.il;;
+	'ruppin' )
+	chrome www.ruppin.ac.il;;
+esac
+}

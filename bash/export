@@ -1,0 +1,11 @@
+#!/bin/bash
+
+export PATH=$PATH:/mnt/c/Windows
+export PATH=$PATH:~/bin
+export PATH=$PATH:'C:\Program Files (x86)\Python36-32'
+export PATH=$PATH:C:/'Program Files (x86)'/Python36-32
+export VISUAL=vim
+export EDITOR="$VISUAL"
+export HISTIGNORE="&:??:[ ]*:clear:exit:logout"
+
+
