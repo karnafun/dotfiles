@@ -4,6 +4,7 @@ if [[ -d ~/.karnafun ]]; then
 	source ~/.karnafun/alias
 	source ~/.karnafun/export
 	source ~/.karnafun/bookmarks
+    source ~/.karnafun/ps1
 	for f in ~/.karnafun/functions/*
 	do
 		source $f

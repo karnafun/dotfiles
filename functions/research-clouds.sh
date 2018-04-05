@@ -13,8 +13,13 @@ if [[ !  -f  $configFile ]]; then
         return;
     fi
 fi 
-echo "Configuring Web.config"
-cat $configFile > Web.config
+if [[  $(pwd) == *"/research-clouds" ]]; then
+    echo "Configuring Web.config"
+    cat $configFile > Web.config
+    git update-index --assume-unchanged Web.config
+else 
+    echo "Wrong Folder ! "
+fi
 }
 function CloneRepo(){
     git clone https://github.com/karnafun/research-clouds 
@@ -23,20 +28,21 @@ function CloneRepo(){
 }
 function rc () {
 ## Configure Shit
-local instructions=" -n / start / clone:"  
+local instructions=" init / start / clone:"  
 instructions+=$'\n';
 instructions+="     Clone and configure research clouds repository"
 instructions+=$'\n';
-instructions+=" -w , config , bgroup";
+instructions+="   config , web  , bgroup";
+instructions+=$'\n';
 instructions+="     Fill Web.config with credentials and configures connection string to test1"
 
 
 ### Actually do somthing
 if [ -z $1 ]; then
     echo "$instructions"
- elif [ $1 == '-n' ] || [ $1 == 'start' ] || [ $1 == 'clone' ]; then
+ elif [ $1 == 'init' ] || [ $1 == 'start' ] || [ $1 == 'clone' ]; then
      CloneRepo
- elif [ $1 == '-w' ] || [ $1 == 'config' ] || [ $1 == 'bgroup' ] ; then
+ elif [ $1 == 'config' ] || [ $1 == 'web' ] || [ $1 == 'bgroup' ] ; then
    ConfigureFiles
  else 
      echo "Invalid action:"
