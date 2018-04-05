@@ -1,102 +1,34 @@
 #!/bin/bash
-ThisRoot="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-function UserRoot() {
-    cd ~
-    ## for easy testing, cd to your testing directory
-}
-function Karnafun () {
-    UserRoot
-    if [ ! -d .karnafun ]; then mkdir .karnafun; fi
-    cd .karnafun
-    if [ ! -d functions ]; then mkdir functions;  fi
-    cd functions
-    for f in $ThisRoot/functions/*
-    do
-        cp $f $(basename $f)
-    done
-    cd ../.. ;
 
-    #echo "Copied  from functions"
-}
-
-function GetBash(){
-     UserRoot
-    if [[ -f .bashrc ]];then
-        echo "Your old .bashrc file was moved to ~/.karnafun/oldfiles/.bashrc"
-        if [ ! -d .karnafun ]; then mkdir .karnafun; fi
-        if [[ ! -d .karnafun/oldfiles ]]; then mkdir .karnafun/oldfiles; fi
-        mv .bashrc .karnafun/oldfiles/.bashrc
+path="https://raw.githubusercontent.com/karnafun/dotfiles/master"
+oldname="$(date '+%y/%m/%d/%T')"
+function backupdir(){
+    if [[ -z ~/.karnafun/backup ]]; then
+        mkdir ~/.karnafun/backup;
     fi
-    cp $ThisRoot/bash/.bashrc .bashrc 
-    if [ ! -d .karnafun ]; then mkdir .karnafun; fi
-    cd .karnafun
-    cp $ThisRoot/bash/alias alias
-    cp $ThisRoot/bash/export export
-    cp $ThisRoot/bash/ps1 ps1
-    cp $ThisRoot/bash/bookmarks bookmarks
-    #echo "Copied from Bash"
-}
-function GetInputrc(){
-    if [[ -f .inputrc ]];then
-        echo "Your old .inputrc file was moved to .inputrc.oldfile"
-        mv .inputrc .inputrc.oldfile
-    fi
-    cp $ThisRoot/bash/.inputrc .inputrc
 }
 
-function GetVim(){
-      UserRoot
-    if [[ -f .vimrc ]];then
-        echo "Your old .vimrc file was moved to ~/.karnafun/oldfiles/.vimrc"
-        if [ ! -d .karnafun ]; then mkdir .karnafun; fi
-        if [[ ! -d .karnafun/oldfiles ]]; then mkdir .karnafun/oldfiles; fi
-        if [ ! -d .karnafun/vim ]; then mkdir .karnafun/vim; fi
-        mv .vimrc .karnafun/oldfiles/.vimrc
-    fi
-    cp $ThisRoot/vim/.vimrc .vimrc
-    
-}
+if [[ -z ~/.karnafun ]]; then 
+    mkdir ~/.karnafun
+elif [[ -f ~/.karnafun/functions.sh ]]; then 
+    backupdir
+    mv ~/.karnafun/functions.sh ~/.karnafun/functions.$oldname
+elif [[ -f ~/.karnafun/shortcuts.sh ]]; then 
+    backupdir
+    mv ~/.karnafun/shortcuts.sh ~/.karnafun/shortcuts.$oldname
+elif [[ -f ~/.karnafun/ps1.sh ]]; then 
+    backupdir
+    mv ~/.karnafun/ps1.sh ~/.karnafun/ps1.$oldname
+fi
 
-function GetFull(){
-GetBash
-GetInputrc
-Karnafun
-GetVim
-if [ -f research-clouds.sh ]; then rm research-clouds.sh; fi 
-}
+curl $path/bash/shortcuts.sh > ~/.karnafun/shortcuts.sh
+curl $path/bash/ps1.sh > ~/.karnafun/ps1.sh
+echo "#!/bin/bash" > ~/.karnafun/.functions.sh
+curl $path/research-clouds.sh >> ~/.karnafun/.functions.sh
+curl $path/resize.sh>> ~/.karnafun/.functions.sh
+curl $path/tmux.sh>> ~/.karnafun/.functions.sh
 
-function GetRc(){
- UserRoot
-cat $ThisRoot/functions/research-clouds.sh >./research-clouds.sh
-echo "source ./research-clouds.sh" >> ./.bashrc
-}
-
-
-function Configure () {
-    echo "full: gets all files from the dotfiles folder"
-    echo "rc: gets the rc function ONLY"
-    read -p  "full/rc? : " input
-    if [ $input  == 'full' ]; then
-      #  UserRoot()
-      #  if [[ -d .karnafun ]]; then
-      #      echo "already containting .karnafun folder. do you want to overwrite ? "
-      #      read -p "(y/n)" _input
-      #      if [[ $_input == 'y' || $_input == 'yes' || $_input == 'Y' ]]; then
-      #         mv .karnafun .karnafun/old-folder
-      #      else    
-      #          exit
-      #      fi
-      #  fi 
-        GetFull
-    elif [ $input  == 'rc' ]; then GetRc
-    else 
-        echo "invalid input, please run script again"
-        exit
-    fi
-
-}
-
-
-
-    
-Configure
+#bashrc="$(curl $path/bash/.bashrc)"
+#echo -e "$bashrc\n\nyour old bash:\n\n$(cat ~/.bashrc 2>/dev/null)" > ~/.bashrc
+curl $path/bash/.bashrc >> ~/.bashrc
+source ~/.bashrc

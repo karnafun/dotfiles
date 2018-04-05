@@ -1,14 +1,13 @@
 #!/bin/bash 
 
 if [[ -d ~/.karnafun ]]; then
-	source ~/.karnafun/alias
-	source ~/.karnafun/export
-	source ~/.karnafun/bookmarks
-    source ~/.karnafun/ps1
-	for f in ~/.karnafun/functions/*
-	do
-		source $f
-	done
+	source ~/.karnafun/shortcuts.sh
+    source ~/.karnafun/ps1.sh
+    source ~/.karnafun/functions.sh
+	#for f in ~/.karnafun/functions/*
+	#do
+	#	source $f
+	#done
 fi
 
 if [[ -e /etc/bash_completion ]]; then
