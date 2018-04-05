@@ -5,8 +5,7 @@ i've deleted / overwritten my own files so many times, that its better saving th
 
 ### Install 
 all configurations into the ~/.karnafun folder:  
-`bash <(curl https://raw.githubusercontent.com/karnafun/dotfiles/master/conf.sh) \  
-source ~/.bashrc`
+`bash <(curl https://raw.githubusercontent.com/karnafun/dotfiles/master/conf.sh) && source ~/.bashrc`
 
 ### rc function for Ilya:
 
