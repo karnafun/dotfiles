@@ -1,4 +1,3 @@
-#!/bin/bash
 
 path="https://raw.githubusercontent.com/karnafun/dotfiles/master"
 oldname="$(date '+%y/%m/%d/%T')"
@@ -23,10 +22,10 @@ fi
 
 curl $path/bash/shortcuts.sh > ~/.karnafun/shortcuts.sh
 curl $path/bash/ps1.sh > ~/.karnafun/ps1.sh
-echo "#!/bin/bash" > ~/.karnafun/.functions.sh
-curl $path/research-clouds.sh >> ~/.karnafun/.functions.sh
-curl $path/resize.sh>> ~/.karnafun/.functions.sh
-curl $path/tmux.sh>> ~/.karnafun/.functions.sh
+echo "#!/bin/bash" > ~/.karnafun/functions.sh
+curl $path/research-clouds.sh >> ~/.karnafun/functions.sh
+curl $path/resize.sh>> ~/.karnafun/functions.sh
+curl $path/tmux.sh>> ~/.karnafun/functions.sh
 
 #bashrc="$(curl $path/bash/.bashrc)"
 #echo -e "$bashrc\n\nyour old bash:\n\n$(cat ~/.bashrc 2>/dev/null)" > ~/.bashrc
