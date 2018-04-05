@@ -1,33 +1,34 @@
 
 path="https://raw.githubusercontent.com/karnafun/dotfiles/master"
-oldname="$(date '+%y/%m/%d/%T')"
+oldname="$(date '+%y.%ml%d-%T')"
 function backupdir(){
-    if [[ -z ~/.karnafun/backup ]]; then
+    if [[ ! -d ~/.karnafun/backup ]]; then
         mkdir ~/.karnafun/backup;
     fi
 }
 
-if [[ -z ~/.karnafun ]]; then 
+if [[ ! -d ~/.karnafun ]]; then 
     mkdir ~/.karnafun
-elif [[ -f ~/.karnafun/functions.sh ]]; then 
+else
     backupdir
-    mv ~/.karnafun/functions.sh ~/.karnafun/functions.$oldname
-elif [[ -f ~/.karnafun/shortcuts.sh ]]; then 
-    backupdir
-    mv ~/.karnafun/shortcuts.sh ~/.karnafun/shortcuts.$oldname
-elif [[ -f ~/.karnafun/ps1.sh ]]; then 
-    backupdir
-    mv ~/.karnafun/ps1.sh ~/.karnafun/ps1.$oldname
+    if [[ -f ~/.karnafun/functions.sh ]]; then 
+        mv ~/.karnafun/functions.sh ~/.karnafun/backup/functions.$oldname
+    fi
+    if [[ -f ~/.karnafun/shortcuts.sh ]]; then 
+        mv ~/.karnafun/shortcuts.sh ~/.karnafun/backup/shortcuts.$oldname
+    fi
+    if [[ -f ~/.karnafun/ps1.sh ]]; then 
+        mv ~/.karnafun/ps1.sh ~/.karnafun/backup/ps1.$oldname
+    fi
 fi
 
-curl $path/bash/shortcuts.sh > ~/.karnafun/shortcuts.sh
-curl $path/bash/ps1.sh > ~/.karnafun/ps1.sh
+curl -s $path/bash/shortcuts.sh > ~/.karnafun/shortcuts.sh
+curl -s $path/bash/ps1.sh > ~/.karnafun/ps1.sh
 echo "#!/bin/bash" > ~/.karnafun/functions.sh
-curl $path/research-clouds.sh >> ~/.karnafun/functions.sh
-curl $path/resize.sh>> ~/.karnafun/functions.sh
-curl $path/tmux.sh>> ~/.karnafun/functions.sh
+curl -s $path/functions/research-clouds.sh >> ~/.karnafun/functions.sh
+curl -s $path/functions/resize.sh>> ~/.karnafun/functions.sh
+curl -s $path/functions/tmux.sh>> ~/.karnafun/functions.sh
 
 #bashrc="$(curl $path/bash/.bashrc)"
 #echo -e "$bashrc\n\nyour old bash:\n\n$(cat ~/.bashrc 2>/dev/null)" > ~/.bashrc
-curl $path/bash/.bashrc >> ~/.bashrc
-source ~/.bashrc
+curl -s $path/bash/.bashrc >> ~/.bashrc && source ~/.bashrc
